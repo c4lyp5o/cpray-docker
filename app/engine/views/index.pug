@@ -1,0 +1,50 @@
+extends layout 
+
+block content
+    if data == 'none'
+        main.container
+            p Assalamualaikum
+
+    else
+            main.container
+                p #{data.prayerTime[0].day}, #{data.prayerTime[0].date} - #{zone}
+                table
+                    thead
+                        tr
+                        th(scope='col') Subuh
+                        th(scope='col') Zuhur
+                        th(scope='col') Asar
+                        th(scope='col') Maghrib
+                        th(scope='col') Isha'
+                    tbody
+                        tr
+                        td #{data.prayerTime[0].fajr}
+                        td #{data.prayerTime[0].dhuhr}
+                        td #{data.prayerTime[0].asr}
+                        td #{data.prayerTime[0].maghrib}
+                        td #{data.prayerTime[0].isha}
+            
+            main.container
+                - var i = 0;
+                each val in data
+                    - i++;
+                    table
+                        thead
+                            p #{data.prayerTime[i].day} - #{data.prayerTime[i].date}
+                            tr
+                            th(scope='col') Subuh
+                            th(scope='col') Zuhur
+                            th(scope='col') Asar
+                            th(scope='col') Maghrib
+                            th(scope='col') Isha'
+                        tbody
+                            tr
+                            td #{data.prayerTime[i].fajr}
+                            td #{data.prayerTime[i].dhuhr}
+                            td #{data.prayerTime[i].asr}
+                            td #{data.prayerTime[i].maghrib}
+                            td #{data.prayerTime[i].isha}
+
+                
+
+

@@ -1,0 +1,108 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css")
+  //- link(rel='stylesheet' href="../styles/style.css")
+  title Waktu Solat
+body
+  main.container
+    .grid
+      div
+        nav      
+            form(action="/" method="POST") 
+              select#zone(required='' name='zone')
+                option(value='' selected='') Sila pilih zon...
+                optgroup(label='Kedah')
+                  option(value='kdh01') KOTA SETAR, POKOK SENA DAN KUBANG PASU
+                  option(value='kdh02') KUALA MUDA, PENDANG DAN YAN
+                  option(value='kdh03') PADANG TERAP DAN SIK
+                  option(value='kdh04') BALING
+                  option(value='kdh05') KULIM DAN BANDAR BAHARU
+                  option(value='kdh06') LANGKAWI
+                  option(value='kdh07') GUNUNG JERAI
+                optgroup(label='Kelantan')
+                  option(value='ktn01') JAJAHAN KOTA BHARU, BACHOK, PASIR PUTEH, TUMPAT , PASIR MAS, TANAH MERAH, MACHANG KUALA KRAI DAN GUA MUSANG (DAERAH CHIKU)
+                  option(value='ktn03') JAJAHAN JELI, GUA MUSANG (DAERAH GALAS DAN BERTAM) DAN JAJAHAN KECIL LOJING
+                optgroup(label='Johor')
+                  option(value='joh01') PULAU AUR DAN PULAU PEMANGGIL
+                  option(value='joh02') KOTA TINGGI, MERSING DAN JOHOR BAHRU
+                  option(value='joh03') KLUANG DAN PONTIAN
+                  option(value='joh04') BATU PAHAT, MUAR, SEGAMAT DAN GEMAS JOHOR
+                optgroup(label='Melaka')
+                  option(value='mlk01') Seluruh Negeri Melaka
+                optgroup(label='Negeri Sembilan')
+                  option(value="ngs01") JEMPOL DAN TAMPIN
+                  option(value="ngs01") PORT DICKSON, SEREMBAN, KUALA PILAH, JELEBU DAN REMBAU
+                optgroup(label='Pahang')
+                  option(value='phg01') PULAU TIOMAN
+                  option(value='phg02') ROMPIN, PEKAN, MUADZAM SHAH DAN KUANTAN
+                  option(value='phg03') MARAN, CHENOR, TEMERLOH, BERA, JENGKA DAN JERANTUT
+                  option(value='phg04') BENTONG, RAUB DAN LIPIS
+                  option(value='phg05') BUKIT TINGGI, GENTING SEMPAH, DAN JANDA BAIK
+                  option(value='phg06') CAMERON HIGHLANDS, BUKIT FRASER DAN GENTING HIGHLANDS
+                optgroup(label='Perak')
+                  option(value='prk01') TAPAH, SLIM RIVER DAN TANJUNG MALIM
+                  option(value='prk02') IPOH, BATU GAJAH, KAMPAR, SG. SIPUT DAN KUALA KANGSAR
+                  option(value='prk03') PENGKALAN HULU, GERIK DAN LENGGONG
+                  option(value='prk04') TEMENGOR DAN BELUM
+                  option(value='prk05') TELUK INTAN, BAGAN DATUK, KG. GAJAH, SERI ISKANDAR, BERUAS, PARIT, LUMUT, SITIAWAN DAN PULAU PANGKOR
+                  option(value='prk06') SELAMA, TAIPING, BAGAN SERAI DAN PARIT BUNTAR
+                  option(value='prk07') BUKIT LARUT
+                optgroup(label='Perlis')
+                  option(value='pls01') Seluruh negeri Perlis
+                optgroup(label='Pulau Pinang')
+                  option(value='png01') Seluruh negeri Pulau Pinang
+                optgroup(label='Sabah')
+                  option(value='sbh01') BAHAGIAN SANDAKAN (TIMUR) BANDAR SANDAKAN, BUKIT GARAM, SEMAWANG, TEMANGGONG DAN TAMBISAN
+                  option(value='sbh02') BAHAGIAN SANDAKAN (BARAT) PINANGAH, TERUSAN, BELURAN, KUAMUT DAN TELUPID
+                  option(value='sbh03') BAHAGIAN TAWAU (TIMUR) LAHAD DATU, KUNAK, SILABUKAN, TUNGKU, SAHABAT, DAN SEMPORNA
+                  option(value='sbh04') BAHAGIAN TAWAU (BARAT), BANDAR TAWAU, BALONG, MEROTAI DAN KALABAKAN
+                  option(value='sbh05') BAHAGIAN KUDAT KUDAT, KOTA MARUDU, PITAS DAN PULAU BANGGI
+                  option(value='sbh06') GUNUNG KINABALU
+                  option(value='sbh07') BAHAGIAN PANTAI BARAT KOTA KINABALU, PENAMPANG, TUARAN, PAPAR, KOTA BELUD, PUTATAN DAN RANAU
+                  option(value='sbh08') BAHAGIAN PEDALAMAN (ATAS) PENSIANGAN, KENINGAU, TAMBUNAN DAN NABAWAN
+                  option(value='sbh09') BAHAGIAN PEDALAMAN (BAWAH) SIPITANG, MEMBAKUT, BEAUFORT, KUALA PENYU, WESTON, TENOM DAN LONG PA SIA
+                optgroup(label='Sarawak')
+                  option(value='swk01') LIMBANG, SUNDAR, TRUSAN DAN LAWAS
+                  option(value='swk02') NIAH, SIBUTI, MIRI, BEKENU DAN MARUDI
+                  option(value='swk03') TATAU, SUAI, BELAGA, PANDAN, SEBAUH, BINTULU
+                  option(value='swk04') IGAN, KANOWIT, SIBU, DALAT, OYA, BALINGIAN, MUKAH, KAPIT DAN SONG
+                  option(value='swk05') BELAWAI, MATU, DARO, SARIKEI, JULAU, BINTANGOR DAN RAJANG
+                  option(value='swk06') KABONG, LINGGA, SRI AMAN, ENGKELILI, BETONG, SPAOH, PUSA, SARATOK, ROBAN, DEBAK DAN LUBOK ANTU
+                  option(value='swk07') SAMARAHAN, SIMUNJAN, SERIAN, SEBUYAU DAN MELUDAM
+                  option(value='swk08') KUCHING, BAU, LUNDU DAN SEMATAN
+                  option(value='swk09') KAMPUNG PATARIKAN
+                optgroup(label='Selangor')
+                  option(value='sgr01') HULU SELANGOR, GOMBAK, PETALING/SHAH ALAM, HULU LANGAT DAN SEPANG
+                  option(value='sgr02') SABAK BERNAM DAN KUALA SELANGOR
+                  option(value='sgr03') LANG DAN KUALA LANGAT
+                optgroup(label='Terengganu')
+                  option(value='trg01') KUALA TERENGGANU, MARANG DAN KUALA NERUS
+                  option(value='trg02') BESUT DAN SETIU
+                  option(value='trg03') HULU TERENGGANU
+                  option(value='trg04') DUNGUN DAN KEMAMAN
+                optgroup(label='Wilayah Persekutuan')
+                  option(value='wly01') Kuala Lumpur dan Putrajaya
+                  option(value='wly02') Labuan
+              br
+              button(type='submit' role='button' value='Submit') Pilih
+      div 
+      div 
+      div          
+            h1 Waktu Solat
+
+  block content
+  
+  main.container
+    .grid
+      div 
+      div 
+      div
+      h6 Reach us:
+      a(href='https://github.com/c4lyp5o') @c4lyp5o
+      div 
+      div
+      div
+
+  
