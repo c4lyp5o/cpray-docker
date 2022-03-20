@@ -1,13 +1,14 @@
 extends layout 
 
 block content
+    - const d = (new Date().getDate() - 1);
     if data == 'none'
         main.container
             p Assalamualaikum
 
     else
             main.container
-                p #{data.prayerTime[0].day}, #{data.prayerTime[0].date} - #{zone}
+                p #{data[d].day}, #{data[d].date} - #{zone}
                 table
                     thead
                         tr
@@ -18,19 +19,18 @@ block content
                         th(scope='col') Isha'
                     tbody
                         tr
-                        td #{data.prayerTime[0].fajr}
-                        td #{data.prayerTime[0].dhuhr}
-                        td #{data.prayerTime[0].asr}
-                        td #{data.prayerTime[0].maghrib}
-                        td #{data.prayerTime[0].isha}
+                        td #{data[d].fajr}
+                        td #{data[d].dhuhr}
+                        td #{data[d].asr}
+                        td #{data[d].maghrib}
+                        td #{data[d].isha}
             
             main.container
                 - var i = 0;
                 each val in data
-                    - i++;
                     table
                         thead
-                            p #{data.prayerTime[i].day} - #{data.prayerTime[i].date}
+                            p #{data[i].day} - #{data[i].date}
                             tr
                             th(scope='col') Subuh
                             th(scope='col') Zuhur
@@ -39,11 +39,12 @@ block content
                             th(scope='col') Isha'
                         tbody
                             tr
-                            td #{data.prayerTime[i].fajr}
-                            td #{data.prayerTime[i].dhuhr}
-                            td #{data.prayerTime[i].asr}
-                            td #{data.prayerTime[i].maghrib}
-                            td #{data.prayerTime[i].isha}
+                            td #{data[i].fajr}
+                            td #{data[i].dhuhr}
+                            td #{data[i].asr}
+                            td #{data[i].maghrib}
+                            td #{data[i].isha}
+                            - i++;
 
                 
 
