@@ -1,14 +1,14 @@
 extends layout 
 
 block content
-    - const d = (new Date().getDate() - 1);
+    - var numberDay = day;
     if data == 'none'
         main.container
             p Assalamualaikum
 
     else
             main.container
-                p #{data[d].day}, #{data[d].date} - #{zone}
+                p #{data[numberDay].day}, #{data[numberDay].date} - #{zone}
                 table
                     thead
                         tr
@@ -19,32 +19,34 @@ block content
                         th(scope='col') Isha'
                     tbody
                         tr
-                        td #{data[d].fajr}
-                        td #{data[d].dhuhr}
-                        td #{data[d].asr}
-                        td #{data[d].maghrib}
-                        td #{data[d].isha}
+                        td #{data[numberDay].fajr}
+                        td #{data[numberDay].dhuhr}
+                        td #{data[numberDay].asr}
+                        td #{data[numberDay].maghrib}
+                        td #{data[numberDay].isha}
+                        - numberDay++;
             
             main.container
-                - var i = 0;
-                each val in data
-                    table
-                        thead
-                            p #{data[i].day} - #{data[i].date}
-                            tr
-                            th(scope='col') Subuh
-                            th(scope='col') Zuhur
-                            th(scope='col') Asar
-                            th(scope='col') Maghrib
-                            th(scope='col') Isha'
-                        tbody
-                            tr
-                            td #{data[i].fajr}
-                            td #{data[i].dhuhr}
-                            td #{data[i].asr}
-                            td #{data[i].maghrib}
-                            td #{data[i].isha}
-                            - i++;
+                - var j = 0;
+                while j < 8
+                        table
+                            thead
+                                p #{data[numberDay].day} - #{data[numberDay].date}
+                                tr
+                                th(scope='col') Subuh
+                                th(scope='col') Zuhur
+                                th(scope='col') Asar
+                                th(scope='col') Maghrib
+                                th(scope='col') Isha'
+                            tbody
+                                tr
+                                td #{data[numberDay].fajr}
+                                td #{data[numberDay].dhuhr}
+                                td #{data[numberDay].asr}
+                                td #{data[numberDay].maghrib}
+                                td #{data[numberDay].isha}
+                                - numberDay++;
+                                - j++;
 
                 
 

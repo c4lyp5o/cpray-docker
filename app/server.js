@@ -16,7 +16,7 @@ function normalizePort(val) {
     return false;
 }
 
-const port = normalizePort( process.env.PORT || '8000');
+const port = normalizePort( 3000 );
 
 function errorHandler(error) {
     if (error.syscall !== 'listen') {
