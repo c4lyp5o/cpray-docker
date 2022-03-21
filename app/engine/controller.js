@@ -1,14 +1,22 @@
 const Cpray = require('cpray');
 const cpray = new Cpray();
+const axios = require('axios').default;
 const redis = require('redis');
-const redisClient = redis.createClient({
-    socket: {
-      host: 'redis',
-      port: 6379
-    }});
+const redisClient = redis.createClient();
 
-exports.comingHome = (req, res, next) => {
-    res.render('index', { data: 'none' });
+exports.comingHome = async (req, res, next) => {
+    await redisClient.connect();
+    const surah = await redisClient.json.get('fullQuran', { path: '.' });
+    if (surah === null || surah.length === 0) {
+        const quranAyat = await axios.get('https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_id.json');
+        await redisClient.json.set('fullQuran', '.', quranAyat.data);
+        console.log('Quran Ayat is empty. now cached in redis');
+    }
+    const ayats = surah[0].verses[0].text + ' ' + surah[0].verses[1].text + ' ' + surah[0].verses[2].text + ' ' + surah[0].verses[3].text + ' ' + surah[0].verses[4].text + ' ' + surah[0].verses[5].text + ' ' + surah[0].verses[6].text;
+    const selected = surah[0].verses[0].translation + '. ' + surah[0].verses[1].translation + '. ' + surah[0].verses[2].translation + '. ' + surah[0].verses[3].translation + '. ' + surah[0].verses[4].translation + '. ' + surah[0].verses[5].translation + '. ' + surah[0].verses[6].translation + '.';
+    res.render('index', { data: 'none', ayat: selected, ayats: ayats });
+    redisClient.disconnect();
+    console.log('Quran is from redis');
 }
 
 exports.scoutingHome = (req, res, next) => {
@@ -81,7 +89,7 @@ exports.knowingHome = async (req, res) => {
         var theMonth = new Date().getMonth();
         if (theDay === 1 && theMonth === 1) {
             const timeValue = await cpray.getTimesbyYear(req.params.zone);
-            await redisClient.json.set(req.params.zone, '.', timeValue, 'EX', 525600);
+            await redisClient.json.set(req.params.zone, '.', timeValue);
             console.log('new year is here. now caching');
         } else {
             console.log('not new year yet');
@@ -91,7 +99,7 @@ exports.knowingHome = async (req, res) => {
         const value = await redisClient.json.get(req.params.zone, { path: '.prayerTime'});
         if (value === null || value.length === 0) {
             const timeValue = await cpray.getTimesbyYear(req.params.zone);
-            await redisClient.json.set(req.params.zone, '.', timeValue, 'EX', 525600);
+            await redisClient.json.set(req.params.zone, '.', timeValue, EX, 15552000);
             const redisVal = await redisClient.json.get(req.params.zone, { path: '.prayerTime'});
             const realZone = zoneReplace[req.params.zone];
             res.render('index', { data: redisVal, zone: realZone, day: numberDay });
@@ -104,3 +112,22 @@ exports.knowingHome = async (req, res) => {
         }
         redisClient.disconnect();
     }
+
+exports.getWholeQuran = async (req, res, next) => {
+    // const surahNum = Math.floor((Math.random() * 30) + 1);
+    // const ayatNum = Math.floor((Math.random() * 100) + 1);
+    // console.log(randomValue);
+    await redisClient.connect();
+    const surah = await redisClient.json.get('fullQuran', { path: '.' });
+    if (surah === null || surah.length === 0) {
+        console.log('Quran Ayat is empty');
+        const quranAyat = await axios.get('https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_id.json');
+        await redisClient.json.set('fullQuran', '.', quranAyat.data);
+        console.log('Quran Ayat is empty. now cached in redis');
+    }
+    const selected = surah[2].verses[2].translation;
+    res.render('index', { data: 'none', ayat: selected });
+    redisClient.disconnect();
+    console.log('Quran is from redis');
+    console.log('done');
+}

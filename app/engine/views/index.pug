@@ -4,7 +4,9 @@ block content
     - var numberDay = day;
     if data == 'none'
         main.container
-            p Assalamualaikum
+            p #{ayats}
+            br
+            p #{ayat}
 
     else
             main.container
@@ -28,7 +30,7 @@ block content
             
             main.container
                 - var j = 0;
-                while j < 8
+                while j < 7
                         table
                             thead
                                 p #{data[numberDay].day} - #{data[numberDay].date}
