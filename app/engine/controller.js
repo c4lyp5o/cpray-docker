@@ -3,7 +3,7 @@ const cpray = new Cpray();
 const redis = require('redis');
 const redisClient = redis.createClient({
     socket: {
-      host: '172.17.0.2',
+      host: 'redis',
       port: 6379
     }});
 
