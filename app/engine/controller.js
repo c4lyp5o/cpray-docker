@@ -1,7 +1,11 @@
 const Cpray = require('cpray');
 const cpray = new Cpray();
 const redis = require('redis');
-const helper = require('./helper');
+const redisClient = redis.createClient({
+    socket: {
+      host: '172.17.0.2',
+      port: 6379
+    }});
 
 exports.comingHome = (req, res, next) => {
     res.render('index', { data: 'none' });
@@ -13,6 +17,7 @@ exports.scoutingHome = (req, res, next) => {
 }
 
 exports.knowingHome = async (req, res) => {
+    await redisClient.connect();
     const zoneReplace = {
         "kdh01": "KOTA SETAR, POKOK SENA DAN KUBANG PASU",
         "kdh02": "KUALA MUDA, PENDANG DAN YAN",
@@ -72,11 +77,17 @@ exports.knowingHome = async (req, res) => {
         "swk09": "KAMPUNG PATARIKAN",
         "wly01": "KUALA LUMPUR DAN PUTRAJAYA",
         "wly02": "LABUAN", };
-        await helper.isItNewYearAlready();
+        var theDay = new Date().getDay();
+        var theMonth = new Date().getMonth();
+        if (theDay === 1 && theMonth === 1) {
+            const timeValue = await cpray.getTimesbyYear(req.params.zone);
+            await redisClient.json.set(req.params.zone, '.', timeValue, 'EX', 525600);
+            console.log('new year is here. now caching');
+        } else {
+            console.log('not new year yet');
+            }
         const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
         const numberDay = (dayOfYear(new Date()) - 1);
-        const redisClient = redis.createClient();
-        await redisClient.connect();
         const value = await redisClient.json.get(req.params.zone, { path: '.prayerTime'});
         if (value === null || value.length === 0) {
             const timeValue = await cpray.getTimesbyYear(req.params.zone);
@@ -91,4 +102,5 @@ exports.knowingHome = async (req, res) => {
             res.render('index', { data: value, zone: realZone, day: numberDay });
             console.log('using redis cache');
         }
+        redisClient.disconnect();
     }

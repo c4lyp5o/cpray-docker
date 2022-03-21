@@ -42,7 +42,7 @@ server.on('error', errorHandler);
 server.on('listening', () => {
     const address = server.address();
     const bind = typeof address === 'string' ? `pipe ${address}` : 'port ' + port;
-    console.log(`Currently istening on ${bind}. Lessgo!`);
+    console.log(`Currently listening on ${bind}. Lessgo!`);
 });
 
 server.listen(port);
