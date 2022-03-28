@@ -1,13 +1,13 @@
 extends layout 
 
 block content
+
     - var numberDay = day;
     if data == 'none'
         main.container
             p #{ayats}
             br
-            p #{ayat}
-
+            p #{translations}
     else
             main.container
                 p #{data[numberDay].day}, #{data[numberDay].date} - #{zone}
